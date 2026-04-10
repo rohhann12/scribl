@@ -44,12 +44,13 @@ app.get('/startRoom', async (req, res) => {
       })
     }
 
-    const { roomId } = await roomManager.startRoom(user.userId)
+    const { roomId,code } = await roomManager.startRoom(user.userId)
 
     return res.json({
       message: 'room started successfully',
       roomId,
       userId: user.userId,
+      code:code
     })
   } catch (error) {
     console.log('error making room', error)

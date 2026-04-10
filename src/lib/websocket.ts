@@ -37,6 +37,8 @@ export class SocketServer {
           // Message broadcast handling will be added here.
         }
       })
+      console.log("joining socket")
+      ws.send("hi you have joined")
     })
   }
 

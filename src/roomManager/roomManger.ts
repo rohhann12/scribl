@@ -1,6 +1,6 @@
 import type { PlayerState } from '../types/types.js'
 import { SocketServer } from '../lib/websocket.js'
-import { generateRandomString } from '../utils/generateString.js'
+import { generateRandomString, generateRoomCode } from '../utils/generateString.js'
 import { prisma } from '../config/config.js'
 
 export class RoomManager {
@@ -10,7 +10,7 @@ export class RoomManager {
     this.roomDetails = new Map()
   }
 
-  public async startRoom(userId: string): Promise<{ roomId: string }> {
+  public async startRoom(userId: string): Promise<{ roomId: string,code:string }> {
     SocketServer.getInstance(8080).registerHandlers()
     const user = await prisma.user.findUnique({
       where: {
@@ -31,10 +31,18 @@ export class RoomManager {
       isDrawer: false,
     }
     const roomId = generateRandomString()
-
+    const code=generateRoomCode()
+    const roomCreate=await prisma.room.create({
+        data:{
+            roomId:roomId,
+            code:code
+        }
+    })
+    
     this.roomDetails.set(roomId, data)
     return {
-      roomId,
+      "roomId":roomId,
+      "code":code
     }
   }
 

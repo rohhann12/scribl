@@ -1,3 +1,8 @@
 export function generateRandomString() {
-  return (Math.random() * 1000).toString().substring(2, 5) + (Math.random() * 1000).toString().substring(2, 5)
+  return (Math.random()).toString(36).substring(2, 6) + (Math.random()).toString().substring(2, 6)
+}
+
+
+export function generateRoomCode() {
+  return Math.random().toString(36).substring(2, 6);
 }
