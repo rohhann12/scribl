@@ -1,0 +1,25 @@
+// This is your Prisma schema file.
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Add your models below the generator block.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User{
+  userId String @id @unique
+  userName String
+  password String
+  email String
+}
+
+model Room{
+  roomId String @id @unique
+  code String @unique
+}
